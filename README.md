@@ -1,4 +1,4 @@
-# 👕 yClothes — Fashion E-commerce
+# 👕 Belanza — Fashion E-commerce
 
 > Laravel 13 · Bootstrap 5 · Katalog Fashion Premium · Midtrans Payment · WhatsApp Checkout
 
@@ -44,7 +44,7 @@ Aplikasi toko online fashion dengan katalog produk, keranjang belanja, transaksi
 
 
 ## 🚀 Cara Install
-> Pastikan database MySQL `yclothes` sudah dibuat. Migration akan membuat tabel-tabelnya otomatis.
+> Pastikan database MySQL `Belanza` sudah dibuat. Migration akan membuat tabel-tabelnya otomatis.
 
 ```bash
 # 1. Setup otomatis (install, .env, key, migrate)
@@ -84,127 +84,12 @@ Webhook notifikasi dikirim otomatis via `Config::$overrideNotifUrl` — tidak pe
 
 ---
 
-## 🚀 Deploy ke Shared Hosting
-
-### ✅ Sudah siap — gak perlu diotak-atik
-
-| Item | Keterangan |
-|------|------------|
-| Frontend assets | Bootstrap CSS/JS statis di `public/bootstrap/` — langsung jalan |
-| Build tools | Tidak ada Vite/Webpack/npm — skip semua |
-| Session & cache | Pakai driver `database` — butuh tabel (migration sudah sediakan) |
-| Warna & tampilan | Diatur dari admin panel, simpan di DB |
-| Gambar produk | Upload via admin, simpan di `storage/app/public/` |
-
-### ⚠️ Yang perlu dicek sebelum deploy
-
-| Cek | Keterangan |
-|-----|------------|
-| **PHP ≥ 8.3** | Laravel 13 wajib PHP 8.3+. Cek via cPanel → Select PHP Version |
-| **MySQL database** | Buat database kosong via phpMyAdmin. Catat nama, user, password |
-| **Ekstensi PHP** | Pastikan `BCMath`, `Ctype`, `Fileinfo`, `JSON`, `Mbstring`, `OpenSSL`, `PDO`, `Tokenizer`, `XML`, `GD` aktif |
-| **Composer** | Hosting harus ada akses Composer (via SSH atau terminal) |
-
-### 1. Upload file
-
-Upload seluruh folder project via FTP/File Manager ke folder `public_html/yclothes/` (atau nama bebas), kecuali:
-
-| Jangan upload | Alasan |
-|---------------|--------|
-| `.env` | Nanti buat ulang di server |
-| `storage/` | Kosongin dulu, nanti regenerasi |
-| `vendor/` | Nanti `composer install` di server |
-| `node_modules/` | Gak ada |
-| `.git/` | Gak perlu |
-
-**Contoh struktur setelah upload (via FileZilla / cPanel File Manager):**
-```
-public_html/
-└── yclothes/
-    ├── app/
-    ├── bootstrap/
-    ├── config/
-    ├── database/
-    ├── public/
-    │   ├── bootstrap/
-    │   ├── css/
-    │   ├── js/
-    │   └── index.php
-    ├── resources/
-    ├── routes/
-    ├── composer.json
-    ├── composer.lock
-    ├── .env.example
-    └── artisan
-```
-
-> File `.env`, folder `storage/`, dan folder `vendor/` **tidak** perlu diupload — nanti dibuat otomatis di server via command setup.
-
-### 2. Setup di server
-
-```bash
-# Masuk SSH atau terminal hosting
-cd public_html/yclothes
-
-# Setup otomatis (install, .env, key, migrate)
-composer run setup
-
-# (Opsional) Seed data awal — admin + contoh produk
-php artisan migrate --seed
-
-# Storage link
-php artisan storage:link
-
-# Cache
-php artisan config:cache
-php artisan route:cache
-```
-
-> **Catatan:** Sebelum `composer run setup`, pastikan `.env` sudah diisi `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `APP_ENV=production`, `APP_DEBUG=false`, dan `APP_URL=https://domainkamu.com`.  
-> Atau edit setelah file `.env` tercopy otomatis.
-
-### 3. Arahkan Document Root
-
-Document root adalah folder yang "dilihat" pengunjung saat buka domain kamu.
-Biasanya hosting otomatis mengarah ke folder `public_html` atau `htdocs`.
-
-Karena project ini pakai Laravel, document root harus diarahkan ke folder **`public/`** di dalam project — bukan folder utama project.
-
-**Caranya:**
-
-| Cara | Langkah |
-|------|---------|
-| **cPanel** | Buka **Domains** → pilih domain → ganti **Document Root** menjadi `public_html/nama-folder-project/public` |
-| **File Manager** | Upload semua file ke `public_html/yclothes/` lalu arahkan document root ke `public_html/yclothes/public` |
-| **Manual** | Buat file `.htaccess` di `public_html` yang isinya: `RewriteRule ^(.*)$ yclothes/public/$1 [L]` |
-
-**Contoh struktur di server:**
-```
-public_html/           ← folder utama hosting (jangan dipake untuk file project)
-└── yclothes/          ← folder project
-    ├── app/
-    ├── bootstrap/
-    ├── public/         ← ini yang harus jadi document root
-    ├── vendor/
-    └── .env
-```
-
-> 💡 **Tips:** Kalau bingung, tanya ke support hosting: "Tolong arahkan document root domain saya ke folder `public` di dalam folder project Laravel."
-
-### 4. Permission
-
-```bash
-chmod -R 755 storage bootstrap/cache
-chmod -R 755 public/storage
-```
-
----
 
 ## 🔑 Admin Panel
 
 | URL | Email | Password |
 |-----|-------|----------|
-| `/admin` | `admin@yclothes.test` | `admin123` |
+| `/admin` | `admin@Belanza.test` | `admin123` |
 
 ---
 
@@ -290,7 +175,7 @@ composer run test
 |---------|---------|------------|
 | Warna Gold | `#C2A56D` | CTA, badge, harga premium |
 | Warna Accent | `#547A95` | Tombol sekunder, link aktif |
-| Brand Name | yClothes | Tampil di navbar & footer |
+| Brand Name | Belanza | Tampil di navbar & footer |
 | Brand Logo | — | Upload logo toko |
 | WA Number | 6280000000000 | Tujuan checkout WhatsApp |
 | Flash Sale End | End of today | Countdown flash sale |
@@ -299,7 +184,7 @@ composer run test
 
 | Setting | Default | Keterangan |
 |---------|---------|------------|
-| Site Title | yClothes | Judul tab browser & OG title |
+| Site Title | Belanza | Judul tab browser & OG title |
 | Site Description | Toko fashion premium... | Meta description & OG description |
 | Hero Title | Koleksi Terbaru<br>Musim Ini | Teks utama hero banner (HTML ok) |
 | Hero Subtitle | Temukan gaya terbaikmu... | Teks pendukung hero |
@@ -320,9 +205,3 @@ composer run test
 - **Shipping:** Weight-based (cost per kg per kota)
 - **Images:** Upload ke `storage/app/public/{products,categories}/` — akses via `$model->image_url`
 - **Session/Cache/Queue:** Database driver
-
----
-
-## 📄 Lisensi
-
-[MIT](https://opensource.org/licenses/MIT)
